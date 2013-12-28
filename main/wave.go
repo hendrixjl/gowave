@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"bufio"
 	"os"
-	"wave"
+	"github.com/hendrixjl/gowave/wave"
 )
 
 func main() {
