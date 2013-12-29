@@ -1,4 +1,6 @@
-package gowave
+
+package main
+
 import (
 	"fmt"
 	"bufio"
