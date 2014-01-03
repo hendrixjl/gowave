@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"bytes"
 	"bufio"
-	"io"
 	"encoding/binary"
 	"errors"
 )
@@ -14,6 +13,7 @@ func Read_into_buffer(reader *bufio.Reader, size int, buf []byte) (totalRead int
 	if (len(buf) < size) {
 		totalRead = 0
 		err = errors.New("Input buffer is not large enough!")
+		return
 	}
         totalRead = 0
 	for totalRead < size {
@@ -28,6 +28,7 @@ func Read_into_buffer(reader *bufio.Reader, size int, buf []byte) (totalRead int
 	err = nil
 	return
 }
+
 
 // read a certain number of bytes and return in a slice
 func Read_bytes(reader *bufio.Reader, size int) []byte {
@@ -76,4 +77,3 @@ func Read_uint16(reader *bufio.Reader) uint16 {
 	}
 	return uint16(answer)
 }
-
