@@ -1,9 +1,11 @@
+
 package wave
 
 import (
 	"testing" 
 	"bufio"
 	"fmt"
+	"io"
 )
 
 
@@ -51,6 +53,22 @@ func TestRead_into_buffer_tooSmall(t *testing.T) {
 	bytesRead, err := Read_into_buffer(reader, 4, buf)
 	if (err == nil) {
 		t.Error("No error returned!")
+	} else if (bytesRead != 0) {
+		t.Error("No bytes should be read!")
+	}
+}
+
+func TestRead_into_buffer_eofBeforeAllBytesRead(t *testing.T) {
+	var freader fakeReader
+	reader := bufio.NewReader(&freader)
+	buf := make([]byte, 10)
+	bytesRead, err := Read_into_buffer(reader, 10, buf)
+	if (err == nil) {
+		t.Error("No error was returned when one should have been!")
+		return
+	}
+	if (err != io.EOF) {
+		t.Error(fmt.Sprintf("Wrong error returned! (%v)", err))
 	}
 	if (bytesRead != 0) {
 		t.Error("No bytes should be read!")
