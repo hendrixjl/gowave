@@ -6,16 +6,27 @@ import (
 	"bufio"
 	"io"
 	"encoding/binary"
+	"errors"
 )
 
 // read into a preallocated buffer
-func Read_into_buffer(reader *bufio.Reader, size int, buf []byte) {
-	for totalRead := 0; totalRead < size; {
+func Read_into_buffer(reader *bufio.Reader, size int, buf []byte) (totalRead int, err error) {
+	if (len(buf) < size) {
+		totalRead = 0
+		err = errors.New("Input buffer is not large enough!")
+	}
+        totalRead = 0
+	for totalRead < size {
 		// read a chunk
-		n, err := reader.Read(buf[totalRead:size])
-		if err != nil && err != io.EOF { panic(err) }
+		var n int
+		n, err = reader.Read(buf[totalRead:size])
+		if err != nil {
+			return
+		}
 		totalRead += n
 	}
+	err = nil
+	return
 }
 
 // read a certain number of bytes and return in a slice
