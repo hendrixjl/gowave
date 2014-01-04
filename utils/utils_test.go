@@ -38,8 +38,8 @@ func (this *fakeReader) Read(p []byte) (n int, err error) {
 func TestRead_into_buffer_happy(t *testing.T) {
 	freader := fakeReader{10}
 	reader := bufio.NewReader(&freader)
-	buf := make([]byte, 5)
-	bytesRead, err := Read_into_buffer(reader, 4, buf)
+	buf := make([]byte, 4)
+	bytesRead, err := Read_into_buffer(reader, buf)
 	if (err != nil) {
 		t.Error(fmt.Sprintf("Error returned! (%s)", err));
 	}
@@ -54,23 +54,12 @@ func TestRead_into_buffer_happy(t *testing.T) {
 	}
 }
 
-func TestRead_into_buffer_tooSmall(t *testing.T) {
-	freader := fakeReader{10}
-	reader := bufio.NewReader(&freader)
-	buf := make([]byte, 2)
-	bytesRead, err := Read_into_buffer(reader, 4, buf)
-	if (err == nil) {
-		t.Error("No error returned!")
-	} else if (bytesRead != 0) {
-		t.Error("No bytes should be read!")
-	}
-}
 
 func TestRead_into_buffer_eofBeforeAllBytesRead(t *testing.T) {
 	freader := fakeReader{5}
 	reader := bufio.NewReader(&freader)
 	buf := make([]byte, 10)
-	bytesRead, err := Read_into_buffer(reader, 10, buf)
+	bytesRead, err := Read_into_buffer(reader, buf)
 	if (err == nil) {
 		t.Error(fmt.Sprintf("No error was returned when one should have been! bytesRead=%d", bytesRead))
 		return
@@ -140,4 +129,20 @@ func TestRead_fixed_string_happy(t *testing.T) {
 
 
 
+func TestRead_uint16_happy(t *testing.T) {
+	freader := fakeReader{10}
+	reader := bufio.NewReader(&freader)
+	u := Read_uint16(reader)
+	if u != 0x0B0A {
+		t.Error(fmt.Sprintf("Number incorrect! (%d)", u))
+	}
+}
 
+func TestRead_uint32_happy(t *testing.T) {
+	freader := fakeReader{10}
+	reader := bufio.NewReader(&freader)
+	u := Read_uint32(reader)
+	if u != 0x0D0C0B0A {
+		t.Error(fmt.Sprintf("Number incorrect! (%d)", u))
+	}
+}
