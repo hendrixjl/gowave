@@ -64,7 +64,10 @@ func TestRead_into_buffer_eofBeforeAllBytesRead(t *testing.T) {
 	buf := make([]byte, 10)
 	bytesRead, err := Read_into_buffer(reader, 10, buf)
 	if (err == nil) {
-		t.Error("No error was returned when one should have been!")
+		t.Error(fmt.Sprintf("No error was returned when one should have been! bytesRead=%d", bytesRead))
+                 for i,b := range buf {
+			t.Log(fmt.Sprintf("idx is %d, bytes is %d", i, b))
+		}
 		return
 	}
 	if (err != io.EOF) {
