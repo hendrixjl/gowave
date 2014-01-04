@@ -10,6 +10,10 @@ import (
 
 func main() {
 	args := os.Args
+	if (len(args) != 2) {
+		fmt.Printf("Usage: %s <filename>\n", args[0])
+		return
+	}
 	fmt.Printf("Argument is %s\n", args[1])
 
 	// open input file
