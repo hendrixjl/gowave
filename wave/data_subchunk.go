@@ -3,6 +3,7 @@ package wave
 import (
 	"bufio"
 	"fmt"
+	"github.com/hendrixjl/gowave/utils"
 )
 
 type Data_subchunk struct {
@@ -22,10 +23,10 @@ func Make_data_subchunk(r *bufio.Reader) (fs *Data_subchunk, bytes_read int) {
 	)
 
 	fs = new(Data_subchunk)
-	fs.subchunkID = Read_fixed_string(r, SUBCHUNK_ID_SIZE)
-	fs.size = Read_uint32(r)
+	fs.subchunkID = utils.Read_fixed_string(r, SUBCHUNK_ID_SIZE)
+	fs.size = utils.Read_uint32(r)
 
-        _ = Read_bytes(r, int(fs.size))
+        _ = utils.Read_bytes(r, int(fs.size))
 	bytes_read = int(fs.size) + 8
 
 	return fs, bytes_read

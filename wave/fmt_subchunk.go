@@ -3,6 +3,7 @@ package wave
 import (
 	"bufio"
 	"fmt"
+	"github.com/hendrixjl/gowave/utils"
 )
 
 type Fmt_subchunk struct {
@@ -33,14 +34,14 @@ func Make_fmt_subchunk(r *bufio.Reader) (fs *Fmt_subchunk, bytes_read int) {
 	)
 
 	fs = new(Fmt_subchunk)
-	fs.subchunkID = Read_fixed_string(r, SUBCHUNK_ID_SIZE)
-	fs.size = Read_uint32(r)
-	fs.format = Read_uint16(r)
-	fs.numChannels = Read_uint16(r)
-	fs.sampleRate = Read_uint32(r)
-	fs.byteRate = Read_uint32(r)
-	fs.blockAlign = Read_uint16(r)
-	fs.bitsPerSample = Read_uint16(r)
+	fs.subchunkID = utils.Read_fixed_string(r, SUBCHUNK_ID_SIZE)
+	fs.size = utils.Read_uint32(r)
+	fs.format = utils.Read_uint16(r)
+	fs.numChannels = utils.Read_uint16(r)
+	fs.sampleRate = utils.Read_uint32(r)
+	fs.byteRate = utils.Read_uint32(r)
+	fs.blockAlign = utils.Read_uint16(r)
+	fs.bitsPerSample = utils.Read_uint16(r)
 
 	return fs, FMT_SUBCHUNK_SIZE
 }

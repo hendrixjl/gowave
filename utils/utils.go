@@ -1,4 +1,4 @@
-package wave
+package utils
 
 import (
 	"fmt"

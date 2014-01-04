@@ -3,6 +3,7 @@ package wave
 import (
 	"bufio"
 	"fmt"
+	"github.com/hendrixjl/gowave/utils"
 )
 
 type Riff_header struct {
@@ -27,9 +28,9 @@ func Make_riff_header(r *bufio.Reader) (rh *Riff_header, bytes_read int) {
 	)
 
 	rh = new(Riff_header)	
-	rh.chunkID = Read_fixed_string(r, CHUNK_ID_SIZE)
-	rh.chunkSize = Read_uint32(r)
-	rh.format = Read_fixed_string(r, FORMAT_SIZE)
+	rh.chunkID = utils.Read_fixed_string(r, CHUNK_ID_SIZE)
+	rh.chunkSize = utils.Read_uint32(r)
+	rh.format = utils.Read_fixed_string(r, FORMAT_SIZE)
 
 	bytes_read = RIFF_HEADER_SIZE
 	return rh, bytes_read
